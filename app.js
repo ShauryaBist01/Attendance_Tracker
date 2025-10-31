@@ -1,19 +1,15 @@
 // Wait for the DOM to be fully loaded before running the script
 document.addEventListener("DOMContentLoaded", () => {
   // --- 1. SELECTORS ---
-  // Get references to the HTML elements we need
   const subjectForm = document.getElementById("add-subject-form");
   const subjectList = document.getElementById("subject-list");
   const subjectNameInput = document.getElementById("subject-name");
   const minPercentageInput = document.getElementById("min-percentage");
 
   // --- 2. DATA STORAGE ---
-  // This array will hold all our subject objects.
-  // We'll try to load from localStorage first.
   let subjects = JSON.parse(localStorage.getItem("attendanceSubjects")) || [];
 
   // --- 3. CORE CALCULATION LOGIC ---
-  // This is the function from our previous discussion
   function calculateAttendance(attended, missed, minReqPercent) {
     const totalClasses = attended + missed;
     const minDecimal = minReqPercent / 100;
@@ -60,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- 4. RENDER FUNCTION ---
-  // This function redraws the entire list of subjects
   function renderSubjects() {
     // Clear the existing list
     subjectList.innerHTML = "";
@@ -80,10 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Create a new div element for the card
       const card = document.createElement("div");
-      card.classList.add("subject-card", status.status); // e.g., "subject-card safe"
+      card.classList.add("subject-card", status.status);
 
-      // Set the card's HTML content
+      // Set the card's HTML content // <-- MODIFIED
       card.innerHTML = `
+        <button class="delete-btn" data-index="${index}">&times;</button>
+
         <h4>${subject.name}</h4>
         <p class="status">${status.message}</p>
         <p>
@@ -120,19 +117,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Listen for the "Add Subject" form submission
   subjectForm.addEventListener("submit", (e) => {
-    e.preventDefault(); // Stop the form from reloading the page
+    e.preventDefault(); 
 
-    // Get the values from the form
     const name = subjectNameInput.value;
     const minPercentage = parseInt(minPercentageInput.value);
 
-    // Basic validation
     if (!name || isNaN(minPercentage) || minPercentage < 0 || minPercentage > 100) {
       alert("Please enter a valid subject name and percentage (0-100).");
       return;
     }
 
-    // Create a new subject object
     const newSubject = {
       name: name,
       minPercentage: minPercentage,
@@ -140,44 +134,46 @@ document.addEventListener("DOMContentLoaded", () => {
       missed: 0,
     };
 
-    // Add the new subject to our array
     subjects.push(newSubject);
-
-    // Clear the form fields
     subjectNameInput.value = "";
     minPercentageInput.value = "75";
 
-    // Save and re-render the list
     saveSubjects();
     renderSubjects();
   });
 
-  // Listen for clicks on the increment/decrement buttons
-  // We use event delegation on the list itself
+  // Listen for clicks on the increment/decrement/delete buttons
+  // This listener is now more complex. // <-- MODIFIED
   subjectList.addEventListener("click", (e) => {
     const target = e.target;
     const index = target.dataset.index;
 
-    // Check if a button was clicked
-    if (!index || !target.dataset.type) {
-      return; // Not a button we care about
-    }
+    // Exit if no index is found (clicked on empty space)
+    if (index === undefined) return;
 
-    const type = target.dataset.type; // "attended" or "missed"
-
-    if (target.classList.contains("inc")) {
-      // Increment
-      subjects[index][type]++;
-    } else if (target.classList.contains("dec")) {
-      // Decrement, but not below zero
-      if (subjects[index][type] > 0) {
-        subjects[index][type]--;
+    // Case 1: Delete button is clicked
+    if (target.classList.contains("delete-btn")) {
+      // Add a confirmation dialog
+      if (confirm(`Are you sure you want to delete "${subjects[index].name}"?`)) {
+        subjects.splice(index, 1); // Remove the subject from the array
+        saveSubjects();
+        renderSubjects();
       }
     }
 
-    // Save and re-render the list
-    saveSubjects();
-    renderSubjects();
+    // Case 2: Inc/Dec button is clicked
+    const type = target.dataset.type;
+    if (type) {
+      if (target.classList.contains("inc")) {
+        subjects[index][type]++;
+      } else if (target.classList.contains("dec")) {
+        if (subjects[index][type] > 0) {
+          subjects[index][type]--;
+        }
+      }
+      saveSubjects();
+      renderSubjects();
+    }
   });
 
   // --- 7. INITIAL LOAD ---
