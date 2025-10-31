@@ -81,12 +81,14 @@ button:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin-bottom: 15px;
   border-left: 5px solid #ccc; /* Default border */
+  position: relative; /* <-- MODIFIED: Added for delete button */
 }
 
 .subject-card h4 {
   margin: 0 0 15px 0;
   font-size: 1.2rem;
   color: #2c3e50;
+  padding-right: 30px; /* Make space for delete button */
 }
 
 .subject-card .status {
@@ -145,4 +147,29 @@ button:hover {
 }
 .controls .dec:hover {
   background-color: #c0392b;
+}
+
+/* --- NEW --- */
+/* Delete Button Styling */
+.delete-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #e74c3c; /* Red */
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 30px; /* Center 'X' */
+  text-align: center;
+  padding: 0;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background: #c0392b; /* Darker red */
 }
