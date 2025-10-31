@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attendance Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>My Attendance Dashboard</h1>
+    </header>
+
+    <main>
+      <form id="add-subject-form">
+        <h3>Add New Subject</h3>
+        <div class="form-group">
+          <label for="subject-name">Subject Name</label>
+          <input
+            type="text"
+            id="subject-name"
+            placeholder="e.g., Data Structures"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="min-percentage">Min. Percentage (%)</label>
+          <input
+            type="number"
+            id="min-percentage"
+            placeholder="e.g., 75"
+            value="75"
+            required
+          />
+        </div>
+        <button type="submit">Add Subject</button>
+      </form>
+
+      <div id="subject-list-container">
+        <h2>My Subjects</h2>
+        <div id="subject-list">
+          </div>
+      </div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

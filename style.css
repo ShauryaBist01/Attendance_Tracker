@@ -1,0 +1,148 @@
+/* Basic Setup */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  background-color: #f4f7f6;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #2c3e50;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Form Styling */
+#add-subject-form {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+#add-subject-form h3 {
+  margin-top: 0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box; /* Important for 100% width */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Subject Card Styling */
+#subject-list-container h2 {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.subject-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 15px;
+  border-left: 5px solid #ccc; /* Default border */
+}
+
+.subject-card h4 {
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.subject-card .status {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Dynamic Status Colors */
+.subject-card.safe {
+  border-left-color: #2ecc71; /* Green */
+}
+.subject-card.safe .status {
+  color: #2ecc71;
+}
+
+.subject-card.danger {
+  border-left-color: #e74c3c; /* Red */
+}
+.subject-card.danger .status {
+  color: #e74c3c;
+}
+
+/* Controls for Attended/Missed */
+.controls {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.controls div {
+  flex: 1;
+}
+
+.controls .count {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.controls button {
+  font-size: 1rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 0;
+}
+.controls .inc {
+  background-color: #2ecc71;
+}
+.controls .dec {
+  background-color: #e74c3c;
+}
+.controls .inc:hover {
+  background-color: #27ae60;
+}
+.controls .dec:hover {
+  background-color: #c0392b;
+}
